@@ -526,7 +526,7 @@ if(PNG_SHARED)
     set_target_properties(png PROPERTIES PREFIX "lib")
     set_target_properties(png PROPERTIES IMPORT_PREFIX "lib")
   endif()
-  target_link_libraries(png ${ZLIB_LIBRARY} ${M_LIBRARY})
+  target_link_libraries(png ZLIB::ZLIB ${M_LIBRARY})
 
   if(UNIX AND AWK)
     if(HAVE_LD_VERSION_SCRIPT)
@@ -561,7 +561,7 @@ if(PNG_STATIC)
     # msvc does not append 'lib' - do it here to have consistent name
     set_target_properties(png_static PROPERTIES PREFIX "lib")
   endif()
-  target_link_libraries(png_static ${ZLIB_LIBRARY} ${M_LIBRARY})
+  target_link_libraries(png_static ZLIB::ZLIB ${M_LIBRARY})
 endif()
 
 if(PNG_FRAMEWORK)
@@ -570,15 +570,15 @@ if(PNG_FRAMEWORK)
   add_dependencies(png_framework genfiles)
   list(APPEND PNG_LIB_TARGETS png_framework)
   set_target_properties(png_framework PROPERTIES
-    FRAMEWORK TRUE
-    FRAMEWORK_VERSION ${PNGLIB_VERSION}
-    MACOSX_FRAMEWORK_SHORT_VERSION_STRING ${PNGLIB_MAJOR}.${PNGLIB_MINOR}
-    MACOSX_FRAMEWORK_BUNDLE_VERSION ${PNGLIB_VERSION}
-    MACOSX_FRAMEWORK_IDENTIFIER org.libpng.libpng
-    XCODE_ATTRIBUTE_INSTALL_PATH "@rpath"
-    PUBLIC_HEADER "${libpng_public_hdrs}"
-    OUTPUT_NAME png)
-  target_link_libraries(png_framework ${ZLIB_LIBRARY} ${M_LIBRARY})
+                        FRAMEWORK TRUE
+                        FRAMEWORK_VERSION ${PNGLIB_VERSION}
+                        MACOSX_FRAMEWORK_SHORT_VERSION_STRING ${PNGLIB_MAJOR}.${PNGLIB_MINOR}
+                        MACOSX_FRAMEWORK_BUNDLE_VERSION ${PNGLIB_VERSION}
+                        MACOSX_FRAMEWORK_IDENTIFIER org.libpng.libpng
+                        XCODE_ATTRIBUTE_INSTALL_PATH "@rpath"
+                        PUBLIC_HEADER "${libpng_public_hdrs}"
+                        OUTPUT_NAME png)
+  target_link_libraries(png_framework ZLIB::ZLIB ${M_LIBRARY})
 endif()
 
 if(NOT PNG_LIB_TARGETS)
@@ -751,7 +751,7 @@ if(PNG_SHARED)
   set(PNG_BIN_TARGETS pngfix)
 
   add_executable(png-fix-itxt ${png_fix_itxt_sources})
-  target_link_libraries(png-fix-itxt ${ZLIB_LIBRARY} ${M_LIBRARY})
+  target_link_libraries(png-fix-itxt ZLIB::ZLIB ${M_LIBRARY})
   list(APPEND PNG_BIN_TARGETS png-fix-itxt)
 endif()
 
